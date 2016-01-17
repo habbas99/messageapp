@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Message App</title>
+</head>
+<body>
+	<h1>Hello World App for AWS</h1>
+	Xhr Result: <span id="id01"></span>
+</body>
+<script>
+	console.log("Making xml http request");
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) {
+	    	console.log("Result is: " + xhttp.responseText);
+	    	document.getElementById("id01").innerHTML = xhttp.responseText;
+	    }
+	};
+	xhttp.open("GET", "/MessageAppServlet", true);
+	xhttp.send();
+</script>
+</html>
