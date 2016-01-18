@@ -9,4 +9,48 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <context-param>
+    <param-name>DB_USER</param-name>
+    <param-value>username</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DB_PASSWORD</param-name>
+    <param-value>password</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DB_NAME</param-name>
+    <param-value>messageapp</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DB_URL</param-name>
+    <param-value>mongodb://localhost:27017</param-value>
+  </context-param>
+  <context-param>
+    <param-name>HOST</param-name>
+    <param-value>localhost:8080</param-value>
+  </context-param>
+  <context-param>
+    <param-name>SMTP_HOST</param-name>
+    <param-value>smtp.gmail.com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>SMTP_PORT</param-name>
+    <param-value>587</param-value>
+  </context-param>
+  <context-param>
+    <param-name>FROM_EMAIL</param-name>
+    <param-value>messageapp2016@gmail.com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>FROM_EMAIL_PASSWORD</param-name>
+    <param-value>1234Zxcv</param-value>
+  </context-param>
+  <context-param>
+    <param-name>EMAIL_SUBJECT_ACTIVATE</param-name>
+    <param-value>Activate your MessageApp account</param-value>
+  </context-param>
+  <context-param>
+    <param-name>EMAIL_SUBJECT_WELCOME</param-name>
+    <param-value>Welcome to MessageApp</param-value>
+  </context-param>
 </web-app>

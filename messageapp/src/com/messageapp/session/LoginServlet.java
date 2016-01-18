@@ -1,4 +1,4 @@
-package com.messageapp.web;
+package com.messageapp.session;
 
 import java.io.IOException;
 
@@ -8,20 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.messageapp.model.user.User;
-import com.messageapp.session.SessionManager;
-
 /**
- * Servlet implementation class MessageAppServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/MessageAppServlet")
-public class MessageAppServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MessageAppServlet() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +28,19 @@ public class MessageAppServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-		User user  = SessionManager.get(request.getSession());
-		if(user == null) {
-			response.sendRedirect("/login.html");
-			return;
-		}
-		
-		System.out.println("User " + user.getEmail() + " found in session");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        boolean isSuccess = SessionManager.login(request.getSession(), username, password);
+        if(isSuccess) {
+        	response.sendRedirect("/welcome.html");
+        }
 	}
 
 }

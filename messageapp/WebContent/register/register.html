@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="register">
+<head>
+<meta charset="ISO-8859-1">
+<title>MessageApp Registration</title>
+
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css"></link>
+<script src="/assets/js/angular.min.js"></script>
+
+<script src="js/register.js"></script>
+</head>
+<body>
+	<div class="container" ng-controller="RegisterController as registerCtrl">
+  		<div class="row">
+  			<h1>MessageApp Registration</h1>
+	    	<form ng-submit="registerCtrl.invite()" ng-hide="registerCtrl.onSuccess">
+	    		<div class="form-group">
+			    	<label for="email">Email</label>
+		   	 		<input type="email" class="form-control" id="email" ng-model="registerCtrl.user.email" placeholder="Email" required>
+			  	</div>
+		  		<div class="form-group">
+			    	<label for="username">User Name</label>
+		   	 		<input type="text" class="form-control" id="username" ng-model="registerCtrl.user.username" placeholder="User Name" required>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="password">Password</label>
+			    	<input type="password" class="form-control" id="password" ng-model="registerCtrl.user.password" placeholder="Password" required>
+			  	</div>
+			  	<button type="submit" value="submit" class="btn btn-default">Submit</button>
+			</form>
+			<h2 ng-show="registerCtrl.onSuccess">An activation email has been sent to {{registerCtrl.user.email}} </h2>
+ 		</div>
+	</div>
+</body>
+</html>
