@@ -3,6 +3,7 @@ package com.messageapp.model.user;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,6 +24,8 @@ public class User {
 	public static enum Role {
 		USER, ADMIN
 	}
+	
+	private static String GET_USERS_RETRIEVED_FIELDS = "email";
 	
 	@Id
 	private ObjectId id;
@@ -45,6 +48,10 @@ public class User {
 	
 	public User() {
 		
+	}
+	
+	public ObjectId getID() {
+		return id;
 	}
 	
 	public String getEmail() {
@@ -100,5 +107,9 @@ public class User {
 	
 	public static User getUser(String username, String secret) {
 		return AppDatastore.INSTANCE.createQuery(User.class).field("username").equal(username).field("secret").equal(secret).get();
+	}
+	
+	public static List<User> getUsers() {
+		return AppDatastore.INSTANCE.createQuery(User.class).retrievedFields(true, GET_USERS_RETRIEVED_FIELDS).asList();
 	}
 }

@@ -9,38 +9,51 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class AuthenticatorServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/authenticator")
+public class AuthenticatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public AuthenticatorServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        boolean isSuccess = SessionManager.login(request.getSession(), username, password);
-        if(isSuccess) {
-        	response.sendRedirect("/welcome.html");
-        }
+		String type = request.getParameter("type");
+		
+		if(type.equalsIgnoreCase("login")) {
+			String username = request.getParameter("username");
+	        String password = request.getParameter("password");
+	        
+	        boolean isSuccess = SessionManager.login(request.getSession(), username, password);
+	        if(isSuccess) {
+	        	response.sendRedirect("/app/index.html");
+	        }
+	        else {
+	        	response.sendRedirect("/loginerror.html");
+	        }
+		}
+		else if(type.equalsIgnoreCase("logout")) {
+			SessionManager.logout(request.getSession());
+			response.sendRedirect("/login.jsp");
+		}
+		else {
+			throw new ServletException("Unsupported type " + type);
+		}
 	}
 
 }
