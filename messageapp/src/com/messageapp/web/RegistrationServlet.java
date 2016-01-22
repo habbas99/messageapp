@@ -39,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
 			User user = User.getUserById(id);
 			user.activate();
 			
-			response.sendRedirect("/login.jsp");
+			response.sendRedirect("/authenticate.jsp?type=login");
 		}
 		
 	}

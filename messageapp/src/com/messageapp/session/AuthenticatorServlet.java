@@ -49,7 +49,6 @@ public class AuthenticatorServlet extends HttpServlet {
 		}
 		else if(type.equalsIgnoreCase("logout")) {
 			SessionManager.logout(request.getSession());
-			response.sendRedirect("/login.jsp");
 		}
 		else {
 			throw new ServletException("Unsupported type " + type);
