@@ -55,6 +55,10 @@
     <param-value>mongodb://localhost:27017</param-value>
   </context-param>
   <context-param>
+    <param-name>PROTOCOL</param-name>
+    <param-value>http</param-value>
+  </context-param>
+  <context-param>
     <param-name>HOST</param-name>
     <param-value>messageapp.elasticbeanstalk.com</param-value>
   </context-param>

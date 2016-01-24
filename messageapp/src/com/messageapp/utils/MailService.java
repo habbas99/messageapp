@@ -28,6 +28,7 @@ public class MailService {
 	private static String SUBJECT_ATTRIBUTE_PREFIX = "EMAIL_SUBJECT_";
 	private static String FROM_EMAIL_ATTRIBUTE = "FROM_EMAIL";
 	private static String FROM_EMAIL_PASSWORD_ATTRIBUTE = "FROM_EMAIL_PASSWORD";
+	private static String PROTOCOL_ATTRIBUTE = "PROTOCOL";
 	private static String HOST_ATTRIBUTE = "HOST";
 	private static String SMTP_HOST_ATTRIBUTE = "SMTP_HOST";
 	private static String SMTP_PORT_ATTRIBUTE = "SMTP_PORT";
@@ -35,6 +36,7 @@ public class MailService {
 	
 	public static MailService INSTANCE;
 	private ServletContext context;
+	private String protocol;
 	private String host;
 	private String smtpHost;
 	private String smtpPort;
@@ -129,19 +131,21 @@ public class MailService {
 		return sub.replace(content);
 	}
 	
+	private void addDefaultParams(Map<String, String> params) {
+		params.put(PROTOCOL_ATTRIBUTE, protocol);
+		params.put(HOST_ATTRIBUTE, host);
+		params.put(REGISTRATION_LINK_ATTRIBUTE, registrationLink);
+	}
+	
 	public static void init(ServletContext context) {
 		INSTANCE = new MailService(context);
 		INSTANCE.from = context.getInitParameter(FROM_EMAIL_ATTRIBUTE);
 		INSTANCE.password = context.getInitParameter(FROM_EMAIL_PASSWORD_ATTRIBUTE);
+		INSTANCE.protocol = context.getInitParameter(PROTOCOL_ATTRIBUTE);
 		INSTANCE.host = context.getInitParameter(HOST_ATTRIBUTE);
 		INSTANCE.smtpHost = context.getInitParameter(SMTP_HOST_ATTRIBUTE);
 		INSTANCE.smtpPort = context.getInitParameter(SMTP_PORT_ATTRIBUTE);
 		INSTANCE.registrationLink = context.getInitParameter(REGISTRATION_LINK_ATTRIBUTE);
 		
-	}
-	
-	private void addDefaultParams(Map<String, String> params) {
-		params.put(HOST_ATTRIBUTE, host);
-		params.put(REGISTRATION_LINK_ATTRIBUTE, registrationLink);
 	}
 }
