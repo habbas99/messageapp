@@ -1,18 +1,28 @@
 <body>
+	<div id="logoutAlert" class="alert alert-info" role="alert" hidden>
+		Please wait as the selected messages are being delete ...
+	</div>
 	<div align="right">
-		<a class="btn btn-danger btn-sm" ng-disabled="">Delete Message(s)</a>
+		<a class="btn btn-danger btn-sm" ng-click="messageListCtrl.deleteSelected()" ng-disabled="!messageListCtrl.selectionList.length || messageListCtrl.deleting">Delete Message(s)</a>
 		<a class="btn btn-primary btn-sm" ui-sref="messages.new">Create Message</a>
 	</div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
+				<th>
+					<input type="checkbox" value="true" ng-checked="messageListCtrl.selectAll" ng-click="messageListCtrl.toggleAll()" ng-disabled="messageListCtrl.selectingAll || messageListCtrl.deleting">
+				</th>
 				<th>Sender</th>
 				<th>Subject</th>
-				<th>Received</th>
+				<th ng-show="messageListCtrl.type == 'received'">Received</th>
+				<th ng-show="messageListCtrl.type == 'sent'">Sent</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="message in messageListCtrl.messages | orderBy: 'message.createdDate':true">
+				<td>
+					<input type="checkbox" value="{{message.id}}" ng-checked="messageListCtrl.selection[message.id]" ng-click="messageListCtrl.toggleSelection(message)" ng-disabled="messageListCtrl.selectingAll || messageListCtrl.deleting">
+				</td>
 				<td><a ui-sref="messages.open({id: message.id})">{{message.senderEmail}}</a></td>
 				<td>{{message.subject}}</td>
 				<td>{{message.createdDate | date: 'medium'}}</td> 

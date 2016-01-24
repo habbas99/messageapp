@@ -9,6 +9,35 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <security-constraint>
+       <display-name>SecurityConstraint</display-name>
+       <web-resource-collection>
+            <web-resource-name>MessageApp</web-resource-name>
+           <url-pattern>/app/*</url-pattern>
+       </web-resource-collection>
+       <!-- 
+       <auth-constraint>
+           <role-name>User</role-name>
+       </auth-constraint>
+        -->
+       <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+       </user-data-constraint>
+   </security-constraint>
+   <!-- 
+   <login-config>
+  		<auth-method>BASIC</auth-method>
+		<realm-name>UserRealm</realm-name>
+	</login-config>
+    -->
+   	<login-config>
+       <auth-method>FORM</auth-method>
+       <form-login-config>
+       		<form-login-page>/authenticate.jsp</form-login-page>
+       		<form-error-page>/loginerror.html</form-error-page>  
+		</form-login-config>
+   </login-config>
+
   <context-param>
     <param-name>DB_USER</param-name>
     <param-value>username</param-value>
@@ -27,7 +56,7 @@
   </context-param>
   <context-param>
     <param-name>HOST</param-name>
-    <param-value>localhost:8080</param-value>
+    <param-value>messageapp.elasticbeanstalk.com</param-value>
   </context-param>
   <context-param>
     <param-name>SMTP_HOST</param-name>
@@ -44,6 +73,14 @@
   <context-param>
     <param-name>FROM_EMAIL_PASSWORD</param-name>
     <param-value>1234Zxcv</param-value>
+  </context-param>
+  <context-param>
+    <param-name>RELATIVE_REGISTRATION_LINK</param-name>
+    <param-value>register/register.html</param-value>
+  </context-param>
+  <context-param>
+    <param-name>EMAIL_SUBJECT_INVITE</param-name>
+    <param-value>Invitation to join MessageApp</param-value>
   </context-param>
   <context-param>
     <param-name>EMAIL_SUBJECT_ACTIVATE</param-name>

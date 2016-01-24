@@ -1,13 +1,20 @@
 <body>
 	<div class="row">
 		<div class="alert alert-success" role="alert" ng-show="messageNewCtrl.onSuccess">
-			Message successfully sent to {{messageNewCtrl.recipient.email}}
+			Message successfully sent to {{messageNewCtrl.recipient.email}}, <a ui-sref="messages.new" ui-sref-opts="{reload: true}">create another message</a>.
+		</div>
+		<div class="alert alert-warning" role="alert" ng-show="messageNewCtrl.userNotFound">
+			User {{messageNewCtrl.recipient}} not found, <a href="" ng-click="messageNewCtrl.invite(messageNewCtrl.recipient)">Invite to MessageApp</a>.
+		</div>
+		<div class="alert alert-warning" role="alert" ng-show="messageNewCtrl.invitedUsers.indexOf(messageNewCtrl.recipient) >= 0">
+			An invitation request has been sent to {{messageNewCtrl.recipient}}, please select another recipient.
 		</div>
     	<form name="messageForm" ng-hide="messageNewCtrl.onSuccess">
     		<div class="form-group">
 		    	<label for="email">Recipient</label>
 	    	 	<span ng-show="messageForm.email.$error.required">Required</span>
-	   	 		<input name="email" type="text" class="form-control" ng-model="messageNewCtrl.recipient" uib-typeahead="user as user.email for user in messageNewCtrl.users | filter:$viewValue | limitTo:8" placeholder="Email" required>
+	    	 	<span ng-show="messageForm.email.$error.email">Invalid Email</span>
+	   	 		<input name="email" type="email" class="form-control" ng-model="messageNewCtrl.recipient" uib-typeahead="user as user.email for user in messageNewCtrl.users | filter:$viewValue | limitTo:8" placeholder="Email" required>
 		  	</div>
 	  		<div class="form-group">
 		    	<label for="subject">Subject</label>

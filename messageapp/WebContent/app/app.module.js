@@ -34,6 +34,17 @@ function HttpService($http, $log) {
 function MainCtrl(HttpService, $stateParams) {
 	var mainCtrl = this;
 	mainCtrl.params = $stateParams;
+	getProfile();
+	
+	function getProfile() {
+		HttpService.get("/message/data?context=user&type=profile", function(err, result) {
+			if(err) {
+				// TODO: handle error
+			}
+			
+			mainCtrl.profile = result;
+		});
+	}
 	
 	mainCtrl.logout = function() {
 		HttpService.post("/authenticator?type=logout", null, function(err) {

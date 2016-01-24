@@ -31,6 +31,7 @@ public class MailService {
 	private static String HOST_ATTRIBUTE = "HOST";
 	private static String SMTP_HOST_ATTRIBUTE = "SMTP_HOST";
 	private static String SMTP_PORT_ATTRIBUTE = "SMTP_PORT";
+	private static String REGISTRATION_LINK_ATTRIBUTE = "RELATIVE_REGISTRATION_LINK";
 	
 	public static MailService INSTANCE;
 	private ServletContext context;
@@ -39,6 +40,7 @@ public class MailService {
 	private String smtpPort;
 	private String from;
 	private String password;
+	private String registrationLink;
 	
 	
 	public MailService(ServletContext context) {
@@ -46,7 +48,7 @@ public class MailService {
 	}
 	
 	public void sendEmail(String type, String to, Map<String, String> params) throws IOException {
-		params.put("HOST", host);
+		addDefaultParams(params);
 		String subject = getSubject(type);
 		String content = getContent(type, params);
 
@@ -134,5 +136,12 @@ public class MailService {
 		INSTANCE.host = context.getInitParameter(HOST_ATTRIBUTE);
 		INSTANCE.smtpHost = context.getInitParameter(SMTP_HOST_ATTRIBUTE);
 		INSTANCE.smtpPort = context.getInitParameter(SMTP_PORT_ATTRIBUTE);
+		INSTANCE.registrationLink = context.getInitParameter(REGISTRATION_LINK_ATTRIBUTE);
+		
+	}
+	
+	private void addDefaultParams(Map<String, String> params) {
+		params.put(HOST_ATTRIBUTE, host);
+		params.put(REGISTRATION_LINK_ATTRIBUTE, registrationLink);
 	}
 }

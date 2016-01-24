@@ -53,7 +53,7 @@ public class MessageAppServlet extends HttpServlet {
 			handleContextRequest(request, response);
 		}
 		catch (Exception e) {
-			LOGGER.log(Level.SEVERE ,"Failed to send email", e);
+			LOGGER.log(Level.SEVERE ,"Request failed", e);
 			throw new ServletException("Request failed");
 		}
 	}
@@ -61,7 +61,7 @@ public class MessageAppServlet extends HttpServlet {
 	private void handleContextRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		User user = SessionManager.get(request.getSession());
 		if(user == null) {
-			response.sendRedirect("/login.jsp");
+			response.sendRedirect("/authenticate.jsp");
 			return;
 		}
 		
@@ -69,7 +69,7 @@ public class MessageAppServlet extends HttpServlet {
 		String context = request.getParameter("context");
 		
 		if(context.equals("user")) {
-			result = handleUserRequest(request);
+			result = handleUserRequest(request, user);
 		}
 		else if(context.equals("message")) {
 			result = handleMessageRequest(request, user);
@@ -84,14 +84,17 @@ public class MessageAppServlet extends HttpServlet {
 		}
 	}
 	
-	private String handleUserRequest(HttpServletRequest request) throws ServletException {
+	private String handleUserRequest(HttpServletRequest request, User actor) throws ServletException, IOException {
 		String result = null;
 		
 		String method = request.getMethod();
 		String type = request.getParameter("type");
 		
 		if(method.equals("GET")) {
-			if(type.equals("users")) {
+			if(type.equals("profile")) {
+				result = GsonConvertor.INSTANCE.toJson(User.getUserById(actor.getID()));
+			}
+			else if(type.equals("users")) {
 				result = GsonConvertor.INSTANCE.toJson(User.getUsers());
 			}
 			else {
@@ -100,7 +103,15 @@ public class MessageAppServlet extends HttpServlet {
 			}
 		}
 		else if(method.equals("POST")) {
-			
+			String content = request.getReader().readLine();
+			User user = GsonConvertor.INSTANCE.fromJson(content, User.class);
+			if(type.equals("invite")) {
+				user.invite(actor);
+			}
+			else {
+				LOGGER.severe("Invalid user request type " + type);
+				throw new ServletException("Invalid user request type " + type);
+			}
 		}
 		else {
 			throw new ServletException("User requests does not support method " + method);
@@ -110,7 +121,7 @@ public class MessageAppServlet extends HttpServlet {
 		return result;
 	}
 	
-	private String handleMessageRequest(HttpServletRequest request, User user) throws ServletException, IOException {
+	private String handleMessageRequest(HttpServletRequest request, User actor) throws ServletException, IOException {
 		String result = null;
 		
 		String method = request.getMethod();
@@ -122,10 +133,10 @@ public class MessageAppServlet extends HttpServlet {
 				result = GsonConvertor.INSTANCE.toJson(Message.getMessageById(id));
 			}
 			else if(type.equals("received")) {
-				result = GsonConvertor.INSTANCE.toJson(Message.getReceivedMessages(user.getID()));
+				result = GsonConvertor.INSTANCE.toJson(Message.getReceivedMessages(actor.getID()));
 			}
 			else if(type.equals("sent")) {
-				result = GsonConvertor.INSTANCE.toJson(Message.getSentMessages(user.getID()));
+				result = GsonConvertor.INSTANCE.toJson(Message.getSentMessages(actor.getID()));
 			}
 			else {
 				LOGGER.severe("Invalid message request type " + type);
@@ -134,11 +145,21 @@ public class MessageAppServlet extends HttpServlet {
 		}
 		else if(method.equals("POST")) {
 			String content = request.getReader().readLine();
-			Message message = GsonConvertor.INSTANCE.fromJson(content, Message.class);
+			MessageRequest messageRequest = GsonConvertor.INSTANCE.fromJson(content, MessageRequest.class);
 			
 			if(type.equals("create")) {
-				message.create(user);
-				result = GsonConvertor.INSTANCE.toJson(message);
+				messageRequest.message.create(actor);
+				result = GsonConvertor.INSTANCE.toJson(messageRequest.message);
+			}
+			else if(type.equals("delete")) {
+				String mode = request.getParameter("mode");
+				if(mode.equals("recipient")) {
+					Message.deleteReceivedMessages(messageRequest.selectedMessageIDs, actor.getID());
+				}
+				else {
+					Message.deleteSentMessages(messageRequest.selectedMessageIDs, actor.getID());
+				}
+				
 			}
 			else {
 				LOGGER.severe("Invalid message request type " + type);

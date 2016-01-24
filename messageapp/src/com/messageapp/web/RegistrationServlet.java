@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.messageapp.model.user.User;
 import com.messageapp.utils.GsonConvertor;
-import com.messageapp.utils.MailService;
 
 /**
  * Servlet implementation class RegistrationServlet
@@ -54,7 +53,7 @@ public class RegistrationServlet extends HttpServlet {
 		try {
 			User user = GsonConvertor.INSTANCE.fromJson(content, User.class);
 			if(type.equals("invite")) {
-				user.invite();
+				user.selfInvite();
 			}
 		}
 		catch(Exception e) {

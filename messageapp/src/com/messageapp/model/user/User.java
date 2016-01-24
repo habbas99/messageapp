@@ -58,7 +58,15 @@ public class User {
 		return email;
 	}
 	
-	public void invite() throws UserExistsException, IOException {
+	public void invite(User actor) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("ACTOR_NAME", actor.email);
+		params.put("REGISTRATION_LINK", actor.email);
+		
+		MailService.INSTANCE.sendEmail("invite", email, params);
+	}
+	
+	public void selfInvite() throws UserExistsException, IOException {
 		User _user = User.getUser(email);
 		if(_user == null) {
 			state = State.PENDING;
@@ -102,7 +110,11 @@ public class User {
 	}
 	
 	public static User getUserById(String id) {
-		return AppDatastore.INSTANCE.createQuery(User.class).field("_id").equal(new ObjectId(id)).get();
+		return User.getUserById(new ObjectId(id));
+	}
+	
+	public static User getUserById(ObjectId id) {
+		return AppDatastore.INSTANCE.createQuery(User.class).field("_id").equal(id).get();
 	}
 	
 	public static User getUser(String username, String secret) {
