@@ -17,8 +17,11 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 	    	<div class="navbar-header">
-	     	 	<a class="navbar-brand">MessageApp</a>
+	     	 	<a class="navbar-brand"><b>MessageApp</b></a>
 	    	</div>
+	    	 <div class="nav navbar-nav navbar-right">
+	        	<a class="navbar-brand btn-sm" href="/register/register.html"><small><b>Register Now</b></small></a>
+	      	</div>
 	    </div>
   	</nav>
 	<div class="container">
@@ -38,7 +41,9 @@
 			    	<label for="password">Password</label>
 			    	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 			  	</div>
-			  	<button type="submit" value="submit" class="btn btn-default">Sign In</button>
+			  	<div align="right">
+				  	<button type="submit" value="submit" class="btn btn-default">Sign In</button>
+				  </div>
 			</form>
  		</div>
 	</div>
