@@ -24,8 +24,12 @@ function HttpService($http, $log) {
 		}).then(function successCallback(response) {
 			callback(null, response.data);
 		}, function errorCallback(response) {
-			// TODO: log error
 			$log.error(method + " request failed for " + url);
+			
+			if(response.status == 401) {
+				return window.location.href = "/authenticate.jsp?type=login&session=expired";
+			}
+			
 			callback(method + " request failed");
 		});
 	}

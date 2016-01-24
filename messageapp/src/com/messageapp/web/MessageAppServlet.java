@@ -1,9 +1,11 @@
 package com.messageapp.web;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,7 +63,7 @@ public class MessageAppServlet extends HttpServlet {
 	private void handleContextRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		User user = SessionManager.get(request.getSession());
 		if(user == null) {
-			response.sendRedirect("/authenticate.jsp");
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
 		
@@ -93,6 +95,10 @@ public class MessageAppServlet extends HttpServlet {
 		if(method.equals("GET")) {
 			if(type.equals("profile")) {
 				result = GsonConvertor.INSTANCE.toJson(User.getUserById(actor.getID()));
+			}
+			else if(type.equals("find")) {
+				String email = URLDecoder.decode(request.getParameter("email"), "UTF-8");
+				result = GsonConvertor.INSTANCE.toJson(User.findActiveUser(email));
 			}
 			else if(type.equals("users")) {
 				result = GsonConvertor.INSTANCE.toJson(User.getUsers());

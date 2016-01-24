@@ -18,19 +18,30 @@
 	    </div>
   	</nav>
 	<div class="container" ng-controller="RegisterController as registerCtrl">
+		<div class="alert alert-danger" role="alert" ng-show="registerCtrl.invalidForm">
+			<p>Cannot submit due to the following:</p>
+			<ul style="list-style-type:circle">
+			  	<li ng-show="registerCtrl.invalidEmail">Invalid email</li>
+			  	<li ng-show="registerCtrl.passwordMismatch">Passwords do not match</li>
+			</ul>
+		</div>
   		<div class="row">
-	    	<form ng-submit="registerCtrl.invite()" ng-hide="registerCtrl.onSuccess">
+	    	<form name="registrationForm" ng-submit="registerCtrl.validateAndInvite(registrationForm.email.$error.email, password1, password2)" ng-hide="registerCtrl.onSuccess">
 	    		<div class="form-group">
-			    	<label for="email">Email</label>
-		   	 		<input type="email" class="form-control" id="email" ng-model="registerCtrl.user.email" placeholder="Email" required>
+			    	<label for="email">Email<span ng-show="registrationForm.email.$error.required">*</span></label>
+		   	 		<input type="email" class="form-control" name="email" ng-model="registerCtrl.user.email" placeholder="Email" required>
 			  	</div>
 		  		<div class="form-group">
-			    	<label for="username">User Name</label>
-		   	 		<input type="text" class="form-control" id="username" ng-model="registerCtrl.user.username" placeholder="User Name" required>
+			    	<label for="username">User Name<span ng-show="registrationForm.username.$error.required">*</span></label>
+		   	 		<input type="text" class="form-control" name="username" ng-model="registerCtrl.user.username" placeholder="User Name" required>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="password">Password</label>
-			    	<input type="password" class="form-control" id="password" ng-model="registerCtrl.user.password" placeholder="Password" required>
+			    	<label for="password1">Password<span ng-show="registrationForm.password1.$error.required">*</span></label>
+			    	<input type="password" class="form-control" name="password1" ng-model="password1" placeholder="Password" required>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="password2">Confirm Password<span ng-show="registrationForm.password2.$error.required">*</span></label>
+			    	<input type="password" class="form-control" name="password2" ng-model="password2" placeholder="Password" required>
 			  	</div>
 			  	<button type="submit" value="submit" class="btn btn-default">Submit</button>
 			</form>

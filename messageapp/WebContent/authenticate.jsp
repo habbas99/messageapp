@@ -25,6 +25,9 @@
 		<div id="logoutAlert" class="alert alert-info" role="alert" hidden>
 			Successfully logged out from your MessageApp account.
 		</div>
+		<div id="sessionExpired" class="alert alert-warning" role="alert" hidden>
+			Session expired, enter your credentials to login.
+		</div>
   		<div class="row">
 	    	<form method="post" action="/authenticator?type=login">
 		  		<div class="form-group">
@@ -44,6 +47,10 @@
 	var params = location.search;
 	if(params && params.indexOf("type=logout") >= 0) {
 		$("#logoutAlert").show();
+	}
+	
+	if(params && params.indexOf("session=expired") >= 0) {
+		$("#sessionExpired").show();
 	}
 </script>
 </html>

@@ -109,6 +109,10 @@ public class User {
 		return AppDatastore.INSTANCE.createQuery(User.class).field("email").equal(email).get();
 	}
 	
+	public static User findActiveUser(String email) {
+		return AppDatastore.INSTANCE.createQuery(User.class).field("email").equal(email).field("state").equal( State.ACTIVE).get();
+	}
+	
 	public static User getUserById(String id) {
 		return User.getUserById(new ObjectId(id));
 	}

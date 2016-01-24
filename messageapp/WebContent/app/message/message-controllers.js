@@ -95,6 +95,7 @@ function MessageNewCtrl(HttpService) {
 	}
 	
 	messageNewCtrl.invite = function(email) {
+		messageNewCtrl.invalidForm = messageNewCtrl.recipientNotFound = false;
 		HttpService.post("/message/data?context=user&type=invite", {"email": email}, function(err, result) {
 			if(err) {
 				// TODO: handle error
@@ -105,21 +106,40 @@ function MessageNewCtrl(HttpService) {
 		});
 	};
 	
-	messageNewCtrl.send = function(recipient) {
-		if(!recipient.id) {
-			for(user in messageNewCtrl.users) {
-				if(user.email == recipient) {
-					return messageNewCtrl.send(user);
-				}
+	function getRecipient(email, callback) {
+		HttpService.get("/message/data?context=user&type=find&email=" + encodeURIComponent(email), function(err, result) {
+			if(err) {
+				return callback(err);
 			}
 			
-			if(messageNewCtrl.invitedUsers.indexOf(messageNewCtrl.recipient) < 0) {
-				messageNewCtrl.userNotFound = true;
-			}
-			
-			return;
+			callback(null, result);
+		});
+	};
+	
+	messageNewCtrl.validateAndSend = function(invalidEmail, recipientEmail) {
+		if(invalidEmail) {
+			messageNewCtrl.invalidEmail = (invalidEmail) ? true : false;
+			return messageNewCtrl.invalidForm = true;
+		}
+		else {
+			messageNewCtrl.invalidForm = messageNewCtrl.invalidEmail = messageNewCtrl.recipientNotFound = false;
 		}
 		
+		getRecipient(recipientEmail, function(err, result) {
+			if(err) {
+				// TODO: handle error
+			}
+			
+			if(result && result != "null") {
+				send(result);
+			}
+			else {
+				messageNewCtrl.invalidForm = messageNewCtrl.recipientNotFound = true;
+			}
+		});
+	};
+	
+	function send(recipient) {
 		messageNewCtrl.message.recipientIDs = [recipient.id];
 		messageNewCtrl.message.recipientEmails = [recipient.email];
 		var messageReq = {"message" : messageNewCtrl.message};
