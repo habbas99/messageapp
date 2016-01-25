@@ -69,7 +69,7 @@ HOST: domain name where application is being hosted (e.g. messageapp.elasticbean
 
 •	Status Codes: 200 OK, success
 
-**_NOTE:_** Remaining API calls require user to be logged in, otherwise server will return status: 401, Unauthorized
+**_NOTE:_** Remaining API calls require user to be logged in, otherwise server will return status: 401 Unauthorized
 
 **_Get User Profile:_**
 
