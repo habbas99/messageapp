@@ -28,7 +28,7 @@ function MessageListCtrl(HttpService, $stateParams) {
 	function getMessage() {
 		HttpService.get("/message/data?context=message&type=" + messageListCtrl.type, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageListCtrl.error = true;
 			}
 			
 			messageListCtrl.messages = result;
@@ -62,7 +62,7 @@ function MessageListCtrl(HttpService, $stateParams) {
 		var messageReq = {"selectedMessageIDs" : messageListCtrl.selectionList};
 		HttpService.post("/message/data?context=message&type=delete&mode=" + mode, messageReq, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageListCtrl.error = true;
 			}
 			
 			for(key in messageListCtrl.selection) {
@@ -81,7 +81,10 @@ function MessageListCtrl(HttpService, $stateParams) {
 function MessageNewCtrl(HttpService) {
 	var messageNewCtrl = this;
 	messageNewCtrl.message = {};
-	messageNewCtrl.invitedUsers = [];
+	
+	/*
+	 * TODO: re-use to fetch contacts and show inside a modal
+	 * 
 	getUsers();
 	
 	function getUsers() {
@@ -93,16 +96,16 @@ function MessageNewCtrl(HttpService) {
 			messageNewCtrl.users = result;
 		});
 	}
+	*/
 	
 	messageNewCtrl.invite = function(email) {
 		messageNewCtrl.invalidForm = messageNewCtrl.recipientNotFound = false;
 		HttpService.post("/message/data?context=user&type=invite", {"email": email}, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageNewCtrl.error = true;
 			}
 			
 			messageNewCtrl.userNotFound = false;
-			messageNewCtrl.invitedUsers.push(email);
 		});
 	};
 	
@@ -127,7 +130,7 @@ function MessageNewCtrl(HttpService) {
 		
 		getRecipient(recipientEmail, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageNewCtrl.error = true;
 			}
 			
 			if(result && result != "null") {
@@ -145,11 +148,10 @@ function MessageNewCtrl(HttpService) {
 		var messageReq = {"message" : messageNewCtrl.message};
 		HttpService.post("/message/data?context=message&type=create", messageReq, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageNewCtrl.error = true;
 			}
 			
 			messageNewCtrl.message = result;
-			messageNewCtrl.invitedUsers = [];
 			messageNewCtrl.userNotFound = false;
 			messageNewCtrl.onSuccess = true;
 		});
@@ -165,7 +167,7 @@ function MessageOpenCtrl(HttpService, $stateParams) {
 		var messageId = $stateParams.id;
 		HttpService.get("/message/data?context=message&type=open&id=" + messageId, function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return messageOpenCtrl.error = true;
 			}
 			
 			messageOpenCtrl.message = result;

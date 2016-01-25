@@ -7,14 +7,24 @@
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css"></link>
 </head>
 <body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+	    	<div class="navbar-header">
+	     	 	<a class="navbar-brand"><b>MessageApp</b></a>
+	    	</div>
+	    	 <div class="nav navbar-nav navbar-right">
+	        	<a class="navbar-brand btn-sm" href="/register/register.html"><small><b>Register Now</b></small></a>
+	      	</div>
+	    </div>
+  	</nav>
 	<div class="container">
   		<div class="row">
-  			<h1>MessageApp Login</h1>
-	    	<div class="alert alert-danger" role="alert">
+	    	<div class="alert alert-danger" role="alert" align="center">
     			<h4>Invalid username or password.</h4>
     			<p>Please make sure that you have entered the correct username or password.</p>
     			<p>
-    				<a type="button" class="btn btn-primary" href="/login.jsp">Try again</a> <button type="button" class="btn btn-default">Reset password</button>
+    				<a type="button" class="btn btn-primary btn-sm" href="authenticate.jsp?type=login">Try again</a>
+    				<button type="button" class="btn btn-default btn-sm" title="Not Supported" disabled>Reset password</button>
     			</p>
     		</div>
  		</div>

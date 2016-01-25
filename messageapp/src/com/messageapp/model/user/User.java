@@ -58,6 +58,11 @@ public class User {
 		return email;
 	}
 	
+	public boolean isPending() {
+		return state.equals(State.PENDING);
+	}
+	
+	
 	public void invite(User actor) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("ACTOR_NAME", actor.email);
@@ -66,19 +71,22 @@ public class User {
 		MailService.INSTANCE.sendEmail("invite", email, params);
 	}
 	
-	public void selfInvite() throws UserExistsException, IOException {
-		User _user = User.getUser(email);
-		if(_user == null) {
+	public void selfInvite(User originalUser) throws UserExistsException, IOException {
+		if(originalUser == null) {
 			state = State.PENDING;
 			secret = DigestUtils.md5Hex(password);
 			createdDate = new Date();
 			save();
 			
-			MailService.INSTANCE.sendEmail("activate", email, getActivateEmailParams());
+			sendActivationEmail();
 		}
 		else {
-			throw new UserExistsException(_user);
+			throw new UserExistsException(originalUser);
 		}
+	}
+	
+	public void sendActivationEmail() throws IOException {
+		MailService.INSTANCE.sendEmail("activate", email, getActivateEmailParams());
 	}
 	
 	public void activate() throws IOException {

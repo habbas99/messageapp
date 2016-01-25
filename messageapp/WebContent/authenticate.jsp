@@ -25,13 +25,13 @@
 	    </div>
   	</nav>
 	<div class="container">
-		<div id="logoutAlert" class="alert alert-info" role="alert" hidden>
-			Successfully logged out from your MessageApp account.
-		</div>
-		<div id="sessionExpired" class="alert alert-warning" role="alert" hidden>
-			Session expired, enter your credentials to login.
-		</div>
   		<div class="row">
+  			<div id="logoutAlert" class="alert alert-info" role="alert" align="center" hidden>
+				Successfully logged out from your MessageApp account.
+			</div>
+			<div id="sessionExpired" class="alert alert-warning" role="alert" align="center" hidden>
+				Session expired, enter your credentials to login.
+			</div>
 	    	<form method="post" action="/authenticator?type=login">
 		  		<div class="form-group">
 			    	<label for="username">User Name</label>
@@ -42,7 +42,8 @@
 			    	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 			  	</div>
 			  	<div align="right">
-				  	<button type="submit" value="submit" class="btn btn-default">Sign In</button>
+			  		<button type="button" class="btn btn-default" title="Not Supported" disabled>Reset</button>
+				  	<button type="submit" value="submit" class="btn btn-primary">Sign In</button>
 				  </div>
 			</form>
  		</div>

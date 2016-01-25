@@ -7,14 +7,28 @@ angular.module('register', [])
 		var registerCtrl = this;
 		registerCtrl.user = {};
 		
+		registerCtrl.remind = function() {
+			registerCtrl.userExists = false;
+			$http({
+				method: 'POST',
+				url: '/register?type=remind',
+				data: registerCtrl.user
+			}).then(function successCallback(response) {
+				registerCtrl.onSuccess = true;
+			}, function errorCallback(response) {
+				registerCtrl.error = true;
+			});
+		};
+		
 		registerCtrl.validateAndInvite = function(invalidEmail, password1, password2) {
-			if(password1 != password2 || invalidEmail) {
+			if(invalidEmail || password1 != password2) {
 				registerCtrl.invalidEmail = (invalidEmail) ? true : false;
 				registerCtrl.passwordMismatch = (password1 != password2) ? true : false;
 				return registerCtrl.invalidForm = true;
 			}
 			else {
 				registerCtrl.invalidForm = registerCtrl.invalidEmail = registerCtrl.passwordMismatch = false;
+				registerCtrl.error = registerCtrl.userExists = false;
 			}
 			
 			invite(password1);
@@ -29,7 +43,12 @@ angular.module('register', [])
 			}).then(function successCallback(response) {
 				registerCtrl.onSuccess = true;
 			}, function errorCallback(response) {
-				
+				if(response.status == 530) {
+					registerCtrl.userExists = true;
+				}
+				else {
+					registerCtrl.error = true;
+				}
 			});
 		}
 	});

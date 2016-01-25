@@ -53,6 +53,14 @@
   		</div><!-- /.container-fluid -->
 	</nav>
 	
-	<div class="container" ui-view></div>
+	<div class="container">
+		<div class="alert alert-danger" role="alert" align="center" ng-show="mainCtrl.error">
+			Failed to retrieve data from server.
+		</div>
+		<div class="alert alert-danger" role="alert" align="center" ng-show="mainCtrl.logoutError">
+			Failed to logout.
+		</div>
+		<div ui-view></div>
+	</div>
 </body>
 </html>

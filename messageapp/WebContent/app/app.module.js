@@ -43,7 +43,7 @@ function MainCtrl(HttpService, $stateParams) {
 	function getProfile() {
 		HttpService.get("/message/data?context=user&type=profile", function(err, result) {
 			if(err) {
-				// TODO: handle error
+				return mainCtrl.error = true;
 			}
 			
 			mainCtrl.profile = result;
@@ -53,7 +53,7 @@ function MainCtrl(HttpService, $stateParams) {
 	mainCtrl.logout = function() {
 		HttpService.post("/authenticator?type=logout", null, function(err) {
 			if(err) {
-				// TODO: handle error
+				return mainCtrl.logoutError = true;
 			}
 			
 			window.location.href = "/authenticate.jsp?type=logout";

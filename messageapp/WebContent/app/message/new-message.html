@@ -1,14 +1,15 @@
 <body>
 	<div class="row">
-		<div class="alert alert-success" role="alert" ng-show="messageNewCtrl.onSuccess">
+		<div class="alert alert-success" role="alert" align="center" ng-show="messageNewCtrl.onSuccess">
 			Message successfully sent to {{recipientEmail}}, <a ui-sref="messages.new" ui-sref-opts="{reload: true}">create another message</a>.
 		</div>
-		<div class="alert alert-danger" role="alert" ng-show="messageNewCtrl.invalidForm">
+		<div class="alert alert-danger" role="alert" align="center" ng-show="messageNewCtrl.error">
+			Failed to retrieve data from server.
+		</div>
+		<div class="alert alert-danger" role="alert" align="center" ng-show="messageNewCtrl.invalidForm">
 			<p>Cannot send message due to the following:</p>
-			<ul style="list-style-type:circle">
-			  	<li ng-show="messageNewCtrl.invalidEmail">Invalid email</li>
-			  	<li ng-show="messageNewCtrl.recipientNotFound">Recipient {{recipientEmail}} does not exist, <a href="" ng-click="messageNewCtrl.invite(recipientEmail)">Invite to join MessageApp</a></li>
-			</ul>
+		  	<p ng-show="messageNewCtrl.invalidEmail">- Invalid email</p>
+		  	<p ng-show="messageNewCtrl.recipientNotFound">- Recipient {{recipientEmail}} does not exist, <a href="" ng-click="messageNewCtrl.invite(recipientEmail)">Invite to join MessageApp</a></p>
 		</div>
     	<form name="messageForm" ng-submit="messageNewCtrl.validateAndSend(messageForm.email.$error.email, recipientEmail)" ng-hide="messageNewCtrl.onSuccess">
     		<div class="form-group">
