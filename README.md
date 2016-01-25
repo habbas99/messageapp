@@ -30,7 +30,7 @@ All requests coming to the Servlets are sent the appropriate business logic comp
 **DEPLOYMENT**
 
 The application is deployed on Amazon's Elastic Beanstalk (with Amazon VPC). The application is hosted on Amazon Linux machine with Tomcat 7 and Java 7. The application is deployed from the Amazon's Elastic Beanstalk interface as a .war file which is generated from Eclipse IDE. All dependencies are handled by Maven for the project (in Eclipse).
-MongoDB needs to installed on the server (though it can be installed on a separate machine). The project settings are set inside web.xml and these parameters are used the application to start-up. The following are the important parameters:
+MongoDB needs to installed on the same server (though it can be installed on a separate machine). The project settings are set inside web.xml and these parameters are used by the application to start-up. The following are the important parameters:
 
 DB_URL: url to connect with mongoDB (e.g. mongodb://localhost:27017)
 
