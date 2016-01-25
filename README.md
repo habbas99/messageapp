@@ -12,5 +12,8 @@ MessageApp is Java web application that runs on tomcat. It has web resources whi
 
 ![architecture](https://cloud.githubusercontent.com/assets/15851901/12544027/d402c790-c303-11e5-9938-535c2d758ac9.png)
 
+All requests coming to the Servlets are sent the appropriate business logic component. The business logic components use the Morphia to communicate the database (i.e. MongoDB).
+
+
 Sequence Diagrams
 ![sequence diagrams](https://cloud.githubusercontent.com/assets/15851901/12543973/3c87b2ae-c303-11e5-9c9c-f7efbf4c3f14.png)
