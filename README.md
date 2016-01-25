@@ -1,4 +1,4 @@
-# MessageApp
+# MessageApp Documentation
 Demo Link: http://messageapp.elasticbeanstalk.com/
 
 **DESCRIPTION**
