@@ -1,6 +1,14 @@
 # MessageApp Documentation
 Demo Link: http://messageapp.elasticbeanstalk.com/
 
+**INSTRUCTIONS**
+* Require a valid email address
+* Register user: http://messageapp.elasticbeanstalk.com/register/register.html
+* Activate account from received email
+* Login (Demo Link) to access MessageApp Interface
+* Repeat to create another user (use separate browser to maintain session of first user)
+* Send messages between users
+
 **DESCRIPTION**
 
 MessageApp is a small web application for users to create/retrieve/delete messages. Additionally, the service also evaluates whether the content of a new message is a Palindrome. 
