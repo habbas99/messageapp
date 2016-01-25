@@ -7,9 +7,9 @@ To use this application, the users first need to register then activate their ac
 
 Architecture
 
-MessageApp is Java web application that runs on tomcat. It has web resources which contain all the resources used for the client front-end. The CRUD requests are handled by Java Servlets.
+MessageApp is Java web application that runs on tomcat. It has web resources which contain all the resources used for the client front-end. The CRUD requests are handled by Java Servlets. A simple architecture of the application is shown below:
 
-A simple architecture of the application is shown below:
+
 ![architecture](https://cloud.githubusercontent.com/assets/15851901/12544027/d402c790-c303-11e5-9938-535c2d758ac9.png)
 
 Sequence Diagrams
