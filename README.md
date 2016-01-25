@@ -162,3 +162,14 @@ HOST: domain name where application is being hosted (e.g. messageapp.elasticbean
 •	MESSAGE_IDS: ["56a596dd2ac78d55ce04c21d "]
 
 •	Status Codes: 200 OK, success
+
+**FUTURE**
+
+* Enable HTTPS
+* MongoDB should run on a separate instance
+* Limit user access to resources
+* Improved error handling
+* Email sent to users should be secure (smtp port 465)
+* Allow password reset
+* UI dates should be local (not UTC)
+
