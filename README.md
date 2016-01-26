@@ -8,7 +8,7 @@ Demo Link: http://messageapp.elasticbeanstalk.com/
 * Login (Demo Link) to access MessageApp Interface
 * Repeat to create another user (use separate browser to maintain session of first user)
 * Send messages between users
-* Open received/sent message to see if it is a Palindrome
+* Open a received or sent message to see if it is a Palindrome
 
 **DESCRIPTION**
 
