@@ -43,6 +43,23 @@ PROTOCOL: http or https (currently server is setup for http only)
 
 HOST: domain name where application is being hosted (e.g. messageapp.elasticbeanstalk.com)
 
+**_Importing from GitHub to Eclipse_**
+
+•	GitHub plugin must be installed on eclipse
+
+•	Import a Github project in eclipse and use the following path: https://github.com/habbas99/messageapp.git
+
+•	Finish by importing as a general project
+
+•	Move WebContent, src and pom.xml to the root
+
+•	Convert to a maven project
+
+•	Run maven clean script
+
+•	Make sure that the project's target runtime is tomcat 7(properties -> targeted runtimes)
+
+
 
 **REST API**
 
